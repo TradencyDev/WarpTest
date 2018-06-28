@@ -3,6 +3,9 @@
 ```
   Install-Package WarpTest
 ```
+Supports 
+- .NET Framework 4.6.1
+- .NET Standard 2.0
 
 # Configuration via app.Config
 Configuration may be done via your app.config. The only config required is `serverAddress`:
@@ -25,7 +28,7 @@ This allows to do something
 ### Method: subscribe
 This method allows to subscribe to stream of messages
 
-```
+```C#
 // init
 string serverAddress = "localhost:50000";
 Subscriber wrapper = new Subscriber(serverAddress);
@@ -42,7 +45,7 @@ private void HandleIncomingMessage(Message message)
 ### Method: send
 This method allows to subscribe to stream of messages
 
-```
+```C#
  // init
  string serverAddress = "localhost:50000";
  Sender wrapper = new Sender(serverAddress);
@@ -65,7 +68,7 @@ This allows to do something
 ### Method: subscribe to requests
 This method allows to subscribe to stream of messages
 
-```
+```C#
 // init
 string serverAddress = "localhost:50000";
 Responder listener = new Responder(serverAddress);
@@ -84,7 +87,7 @@ private Response HandleIncomingRequests(Request request)
 ### Method: send request
 This method allows to subscribe to stream of messages
 
-```
+```C#
  // init
 string serverAddress = "localhost:50000";
 Initiator wrapper = new Initiator(serverAddress);
