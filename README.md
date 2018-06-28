@@ -26,14 +26,35 @@ This allows to do something
 This method allows to subscribe to stream of messages
 
 ```
-  example
+// init
+string serverAddress = "localhost:50000";
+Subscriber wrapper = new Subscriber(serverAddress);
+
+// Subscribe
+string channel = "Sample.test1";
+wrapper.SubscribeToMessages(HandleIncomingMessage, channel);
+            
+private void HandleIncomingMessage(Message message)
+{
+}
 ```
 
 ### Method: send
 This method allows to subscribe to stream of messages
 
 ```
-  example
+ // init
+ string serverAddress = "localhost:50000";
+ Sender wrapper = new Sender(serverAddress);
+ 
+ // SendMessage
+Message message1 = new Message()
+{
+    Channel = "Sample.test1",
+    Metadata = "A sample string Metadata",
+    Body = Tools.Converter.ToByteArray("Pubsub test message")
+};
+wrapper.SendMessage(message1);
 ```
 
 # Usage: req\rep
@@ -45,14 +66,42 @@ This allows to do something
 This method allows to subscribe to stream of messages
 
 ```
-  example
+// init
+string serverAddress = "localhost:50000";
+Responder listener = new Responder(serverAddress);
+
+// Subscribe
+string channel = "MyChannel.SimpleRequest";
+listener.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
+
+private Response HandleIncomingRequests(Request request)
+{
+...
+}
+
 ```
 
 ### Method: send request
 This method allows to subscribe to stream of messages
 
 ```
-  example
+ // init
+string serverAddress = "localhost:50000";
+Initiator wrapper = new Initiator(serverAddress);
+
+// Send Request
+Request request = new Request()
+            {
+                Channel = "MyChannel.SimpleRequest",
+                Metadata = "MyMetadata",
+                Body = Tools.Converter.ToByteArray("A Simple Request."),
+                Timeout = 5000,
+                CacheKey = "",
+                CacheTTL = 0
+            };
+            
+Response response = wrapper.SendRequest(request);
+
 ```
 
 # History
