@@ -15,11 +15,17 @@ text to describe general functionality
 ```
   Install-Package WarpTest
 ```
+# Configuration
+The Navio Server Address can be set in the code or via Configuration.
+Configuration can be set by using one of the following:
+- Environment Variable
+- `appsettings.json` file
+- `app.Config` file
 
-# Configuration via Environment Variable
+### Configuration via Environment Variable
  Set `NavioServerAddress` to the Navio Server Address
 
-# Configuration via appsettings.json
+### Configuration via appsettings.json
 Configuration may be done via your appsettings.json.
 ```JSON
 {
@@ -29,7 +35,7 @@ Configuration may be done via your appsettings.json.
 }
 ```
 
-# Configuration via app.Config
+### Configuration via app.Config
 Configuration may be done via your app.config. The only config required is `serverAddress`:
 ```xml
 <configuration>  
