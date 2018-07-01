@@ -1,11 +1,20 @@
 # .NET Client for Warp
-.NET client SDK for Warp. Simple interface to work with the Warp server. Install via nuget with
+.NET client SDK for Warp. Simple interface to work with the Warp server.
+
+
+# General description
+text to describe general functionality
+- pub\sub
+- req\rep
+
+# Supports:
+- .NET Framework 4.6.1
+- .NET Standard 2.0
+
+# Install via nuget:
 ```
   Install-Package WarpTest
 ```
-Supports 
-- .NET Framework 4.6.1
-- .NET Standard 2.0
 
 # Configuration via app.Config
 Configuration may be done via your app.config. The only config required is `serverAddress`:
@@ -14,11 +23,6 @@ Configuration may be done via your app.config. The only config required is `serv
   <name="serverAddress" value="localhost:50000"/>
 </configuration>
 ```
-
-# General description
-text to describe general functionality
-- pub\sub
-- req\rep
 
 # Usage: pub\sub
 This allows to do something
