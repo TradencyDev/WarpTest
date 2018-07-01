@@ -16,11 +16,30 @@ text to describe general functionality
   Install-Package WarpTest
 ```
 
+# Configuration via Environment Variable
+ Set `NavioServerAddress` to the Navio Server Address
+
+# Configuration via appsettings.json
+Configuration may be done via your appsettings.json.
+```JSON
+{
+  "Navio": {
+    "serverAddress": "localhost:50000"
+  }
+}
+```
+
 # Configuration via app.Config
 Configuration may be done via your app.config. The only config required is `serverAddress`:
-```
-<configuration>
-  <name="serverAddress" value="localhost:50000"/>
+```xml
+<configuration>  
+   <configSections>  
+    <section name="Navio" type="System.Configuration.NameValueSectionHandler"/>      
+  </configSections>  
+    
+  <Navio>  
+    <add key="serverAddress" value="localhost:50000"/>
+  </Navio>  
 </configuration>
 ```
 
