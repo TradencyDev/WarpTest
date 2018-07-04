@@ -1,5 +1,5 @@
-# .NET Client for Warp
-.NET client SDK for Warp. Simple interface to work with the Warp server.
+# .NET Client for Navio
+.NET client SDK for Navio. Simple interface to work with the Navio server.
 
 
 # General description
