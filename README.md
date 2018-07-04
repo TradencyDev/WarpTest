@@ -5,8 +5,7 @@
 Navio is a messaging backend for distributed services architecture, delivered as a single Kubernetes service. Easily connects to services and clients, allowing high-scale and high-availability cluster, low-latency and secured implementation of pub-sub, queue messaging patterns and request/reply.
 
 # General SDK description
-The SDK implements all communication methods available through the Navio server.
-The types are:
+The SDK implements all communication patterns available through the Navio server:
 - pub\sub
 - req\rep
 
@@ -66,14 +65,15 @@ See exactly how in the code examples in this document.
 
 
 # Usage: Main concepts
-Pattern
 
-- Channel
-- Group
+- Channel: 
+- Group: 
+- Metadata: the metadata allows to pass additional information with the message.
+- Body: the actual content of the message. can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection and many more.
 
 
 # Usage: pub\sub
-This allows to do something
+Employing several variations of point to point pub-sub communication style patterns.
 - Subscribe to messages
 - Send stream
 - Send single message
