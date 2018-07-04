@@ -65,13 +65,21 @@ When setting the Navio server address within the code, simply pass the address a
 See exactly how in the code examples in this document.
 
 
+# Usage: Main concepts
+Pattern
+
+- Channel
+- Group
+
+
 # Usage: pub\sub
 This allows to do something
-- subscribe
-- send
+- Subscribe to messages
+- Send stream
+- Send single message
 
 ### Method: subscribe
-This method allows to subscribe to stream of messages
+This method allows to subscribe to messages. Both single and stream of messages.
 
 ```C#
 // init
@@ -87,7 +95,7 @@ private void HandleIncomingMessage(Message message)
 }
 ```
 
-### Method: send
+### Method: send single
 This method allows to subscribe to stream of messages
 
 ```C#
@@ -103,6 +111,13 @@ Message message1 = new Message()
     Body = Tools.Converter.ToByteArray("Pubsub test message")
 };
 wrapper.SendMessage(message1);
+```
+
+### Method: send stream
+This method allows to subscribe to stream of messages
+
+```C#
+ 
 ```
 
 # Usage: req\rep
