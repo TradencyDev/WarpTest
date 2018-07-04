@@ -1,9 +1,12 @@
 # .NET Client for Navio
 .NET client SDK for Navio. Simple interface to work with the Navio server.
 
+# What is Navio:
+Navio is a messaging backend for distributed services architecture, delivered as a single Kubernetes service. Easily connects to services and clients, allowing high-scale and high-availability cluster, low-latency and secured implementation of pub-sub, queue messaging patterns and request/reply.
 
-# General description
-text to describe general functionality
+# General SDK description
+The SDK implements all communication methods available through the Navio server.
+The types are:
 - pub\sub
 - req\rep
 
