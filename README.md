@@ -18,28 +18,35 @@ The types are:
 ```
   Install-Package WarpTest
 ```
-# Configuration
-The Navio Server Address can be set in the code or via Configuration.
+
+
+# Configurations
+The only required configuration setting is the Navio server address.
+
 Configuration can be set by using one of the following:
 - Environment Variable
 - `appsettings.json` file
 - `app.Config` file
+- Within the code
+
 
 ### Configuration via Environment Variable
- Set `NavioServerAddress` to the Navio Server Address
+Set `NavioServerAddress` to the Navio Server Address
+
 
 ### Configuration via appsettings.json
-Configuration may be done via your appsettings.json.
+Simply add the following to your appsettings.json:
 ```JSON
 {
   "Navio": {
-    "serverAddress": "localhost:50000"
+    "serverAddress": "ServerAddress:ServerPort"
   }
 }
 ```
 
+
 ### Configuration via app.Config
-Configuration may be done via your app.config. The only config required is `serverAddress`:
+Simply add the following to your app.config:
 ```xml
 <configuration>  
    <configSections>  
@@ -47,10 +54,16 @@ Configuration may be done via your app.config. The only config required is `serv
   </configSections>  
     
   <Navio>  
-    <add key="serverAddress" value="localhost:50000"/>
+    <add key="serverAddress" value="ServerAddress:ServerPort"/>
   </Navio>  
 </configuration>
 ```
+
+
+### Configuration via code
+When setting the Navio server address within the code, simply pass the address as a parameter to the various constructors.
+See exactly how in the code examples in this document.
+
 
 # Usage: pub\sub
 This allows to do something
