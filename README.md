@@ -93,9 +93,11 @@ Subscriber subscriber = new Subscriber(serverAddress);
 // Subscribe
 string channel = "Sample.test1";
 subscriber.SubscribeToMessages(HandleIncomingMessage, channel);
-            
+
+// delegate to handle the incoming messages
 private void HandleIncomingMessage(Message message)
 {
+...
 }
 ```
 
@@ -103,17 +105,18 @@ private void HandleIncomingMessage(Message message)
 This method allows to send a single message
 
 ```C#
- // init
+ // initialize Sender with server address or use configuration
  string serverAddress = "localhost:50000";
  Sender sender = new Sender(serverAddress);
  
- // SendMessage
+ // Create the message
 Message message1 = new Message()
 {
     Channel = "Sample.test1",
     Metadata = "A sample string Metadata",
     Body = Tools.Converter.ToByteArray("Pubsub test message")
 };
+// SendMessage
 sender.SendMessage(message1);
 ```
 
