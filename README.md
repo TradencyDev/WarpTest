@@ -25,7 +25,7 @@ The only required configuration setting is the Navio server address.
 Configuration can be set by using one of the following:
 - Environment Variable
 - `appsettings.json` file
-- `app.Config` file
+- `app.Config` or `Web.config` file
 - Within the code
 
 
@@ -66,15 +66,19 @@ See exactly how in the code examples in this document.
 
 # Usage: Main concepts
 
-- Channel: 
-- Group: 
-- Metadata: the metadata allows to pass additional information with the message.
-- Body: the actual content of the message. can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection and many more.
+- Channel: represents the endpoint/s target/s. One-to-one or one-to-many. Real-Time Multicast
+- Group: logical grouping. One of the group for each and every group. all endpoints with no group (the Empty group)
+- Metadata: the metadata allows to pass additional information with the message. can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
+
+- Body: the actual content of the message. can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
+
+- Client Display Name. optional. Displayed by API
 
 
 # Usage: pub\sub
 Employing several variations of point to point pub-sub communication style patterns.
-- Subscribe to messages
+Allows to connects a publisher to one or a set of subscribers
+- Subscribe to messages. call a delegte (cllback) awit for a task (not bloking not polling)
 - Send stream
 - Send single message
 
@@ -84,11 +88,11 @@ This method allows to subscribe to messages. Both single and stream of messages.
 ```C#
 // init
 string serverAddress = "localhost:50000";
-Subscriber wrapper = new Subscriber(serverAddress);
+Subscriber subscriber = new Subscriber(serverAddress);
 
 // Subscribe
 string channel = "Sample.test1";
-wrapper.SubscribeToMessages(HandleIncomingMessage, channel);
+subscriber.SubscribeToMessages(HandleIncomingMessage, channel);
             
 private void HandleIncomingMessage(Message message)
 {
@@ -96,12 +100,12 @@ private void HandleIncomingMessage(Message message)
 ```
 
 ### Method: send single
-This method allows to subscribe to stream of messages
+This method allows to send a single message
 
 ```C#
  // init
  string serverAddress = "localhost:50000";
- Sender wrapper = new Sender(serverAddress);
+ Sender sender = new Sender(serverAddress);
  
  // SendMessage
 Message message1 = new Message()
@@ -110,23 +114,40 @@ Message message1 = new Message()
     Metadata = "A sample string Metadata",
     Body = Tools.Converter.ToByteArray("Pubsub test message")
 };
-wrapper.SendMessage(message1);
+sender.SendMessage(message1);
 ```
 
 ### Method: send stream
-This method allows to subscribe to stream of messages
+This method allows to send messages to stream
+use case: a very large file in chunks or very frequently message sending rate 
 
 ```C#
+ // init
+ string serverAddress = "localhost:50000";
+ Sender sender = new Sender(serverAddress);
+ 
+ sender.StreamMessage
+ sender.ClosesMessageStreamAsync()
  
 ```
 
 # Usage: req\rep
-This allows to do something
+This allows to do something. client to a service
 - subscribe to requests
 - send request
+ 
+### Cache mechanism
+Cache, CacheKey, CacheTTL, CacheHit
+
+### The Request objet:
+Reply Channel is set internally 
+Timeout
+Cache, CacheKey, CacheTTL, CacheHit
+### Response object:
+RequestID
 
 ### Method: subscribe to requests
-This method allows to subscribe to stream of messages
+This method allows to subscribe to stream of messages. 
 
 ```C#
 // init
@@ -150,7 +171,7 @@ This method allows to subscribe to stream of messages
 ```C#
  // init
 string serverAddress = "localhost:50000";
-Initiator wrapper = new Initiator(serverAddress);
+Initiator initiator = new Initiator(serverAddress);
 
 // Send Request
 Request request = new Request()
@@ -163,7 +184,7 @@ Request request = new Request()
                 CacheTTL = 0
             };
             
-Response response = wrapper.SendRequest(request);
+Response response = initiator.SendRequest(request);
 
 ```
 
