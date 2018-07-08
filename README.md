@@ -135,12 +135,16 @@ use case: a very large file in chunks or very frequently message sending rate
 ```
 
 # Usage: req\rep
-This allows to do something. client to a service
+Two way communication patteren, enables Cache stored at Navio server.
 - subscribe to requests
 - send request
  
 ### Cache mechanism
 Cache, CacheKey, CacheTTL, CacheHit
+CacheKey - Key to store cache
+CacheTTL - Cahce data Time to live
+CacheHit - Flag of the retuned data origin
+
 
 ### The Request objet:
 Reply Channel is set internally 
