@@ -83,10 +83,10 @@ This method allows to subscribe to messages. Both single and stream of messages.
 Pass a delegte (cllback) that will handle the incoming messages
 The implementation wait for a message ("awit for a task", not bloking not polling)
 parameters:
-handler - mandatory. delegte (cllback) that will handle the incoming messages
-Channel - mandatory. see Main concepts
-Group  - optional. see Main concepts
-clientDisplayName - optional. Client Display Name.
+- handler - mandatory. delegte (cllback) that will handle the incoming messages
+- Channel - mandatory. see Main concepts
+- Group  - optional. see Main concepts
+- clientDisplayName - optional. Client Display Name.
 
 ```C#
 // init
@@ -110,13 +110,13 @@ private void HandleIncomingMessage(Message message)
 ### Method: send single
 This method allows to send a single message
 parameters:
-Message - mandatory. Message to send. 
-clientDisplayName - optional. Client Display Name.
+- Message - mandatory. Message to send. 
+- clientDisplayName - optional. Client Display Name.
 
 Message object fields:
-Channel
-Metadata
-Body
+- Channel
+- Metadata
+- Body
 
 ```C#
  // initialize Sender with server address or use configuration
@@ -163,27 +163,27 @@ Cache, CacheKey, CacheTTL, CacheHit
 
 ### The Request objet:
 explain here all the Request objet fields:
-Reply Channel is set internally, no need to do it  
-Timeout
-Cache, CacheKey, CacheTTL, CacheHit
-ID - set internally used to mutch RequestID to Response
-Channel, Metadata, Body
+- Reply Channel is set internally, no need to do it  
+- Timeout
+- Cache, CacheKey, CacheTTL, CacheHit
+- ID - set internally used to mutch RequestID to Response
+- Channel, Metadata, Body
 
 ### Response object:
 explain here all the Response objet fields:
-RequestID - set internally, For read use only
-ReplyChannel - Reply Channel is set internally, no need to do it  
-CacheHit - Flag of the retuned data origin
-Metadata
-Body
+- RequestID - set internally, For read use only
+- ReplyChannel - Reply Channel is set internally, no need to do it  
+- CacheHit - Flag of the retuned data origin
+- Metadata
+- Body
 
 ### Method: subscribe to requests
 This method allows to subscribe to stream of messages. 
 parameters:
-handler - mandatory. delegte (cllback) that will handle the incoming requests
-Channel - mandatory. see Main concepts
-Group  - optional. see Main concepts
-clientDisplayName - optional. Client Display Name.
+- handler - mandatory. delegte (cllback) that will handle the incoming requests
+- Channel - mandatory. see Main concepts
+- Group  - optional. see Main concepts
+- clientDisplayName - optional. Client Display Name.
 
 
 ```C#
@@ -212,6 +212,9 @@ private Response HandleIncomingRequests(Request request)
 
 ### Method: send request
 This method allows to subscribe to stream of messages
+parameters:
+- request - mandatory. request to send. 
+- clientDisplayName - optional. Client Display Name.
 
 ```C#
  // init with server address in code:
