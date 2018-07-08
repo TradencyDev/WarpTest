@@ -141,9 +141,9 @@ Two way communication patteren, enables Cache stored at Navio server.
  
 ### Cache mechanism
 Cache, CacheKey, CacheTTL, CacheHit
-CacheKey - Key to store cache
-CacheTTL - Cahce data Time to live
-CacheHit - Flag of the retuned data origin
+- CacheKey  Key to store cache
+- CacheTTL  Cahce data Time to live
+- CacheHit  Flag of the retuned data origin
 
 
 ### The Request objet:
