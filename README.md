@@ -9,10 +9,6 @@ The SDK implements all communication patterns available through the Navio server
 - pub\sub
 - req\rep
 
-# Supports:
-- .NET Framework 4.6.1
-- .NET Standard 2.0
-
 # Install via nuget:
 ```
   Install-Package WarpTest
@@ -78,12 +74,19 @@ See exactly how in the code examples in this document.
 # Usage: pub\sub
 Employing several variations of point to point pub-sub communication style patterns.
 Allows to connects a publisher to one or a set of subscribers
-- Subscribe to messages. call a delegte (cllback) awit for a task (not bloking not polling)
+- Subscribe to messages.
 - Send stream
 - Send single message
 
 ### Method: subscribe
 This method allows to subscribe to messages. Both single and stream of messages.
+Pass a delegte (cllback) that will handle the incoming messages
+The implementation wait for a message ("awit for a task", not bloking not polling)
+parameters:
+handler - mandatory. delegte (cllback) that will handle the incoming messages
+Channel - mandatory. see Main concepts
+Group  - optional. see Main concepts
+clientDisplayName - optional. Client Display Name.
 
 ```C#
 // init
@@ -106,6 +109,14 @@ private void HandleIncomingMessage(Message message)
 
 ### Method: send single
 This method allows to send a single message
+parameters:
+Message - mandatory. Message to send. 
+clientDisplayName - optional. Client Display Name.
+
+Message object fields:
+Channel
+Metadata
+Body
 
 ```C#
  // initialize Sender with server address or use configuration
@@ -132,7 +143,8 @@ use case: a very large file in chunks or very frequently message sending rate
  string serverAddress = "localhost:50000";
  Sender sender = new Sender(serverAddress);
  
- sender.StreamMessage
+ // TODO: add creation of many messages... 
+ sender.StreamMessage(message);
  sender.ClosesMessageStreamAsync()
  
 ```
@@ -167,6 +179,12 @@ Body
 
 ### Method: subscribe to requests
 This method allows to subscribe to stream of messages. 
+parameters:
+handler - mandatory. delegte (cllback) that will handle the incoming requests
+Channel - mandatory. see Main concepts
+Group  - optional. see Main concepts
+clientDisplayName - optional. Client Display Name.
+
 
 ```C#
 // init with server address in code:
@@ -220,6 +238,9 @@ Response response = initiator.SendRequest(request);
 Response response = initiator.SendRequest(request, "clientDisplayName");
 
 ```
+# Supports:
+- .NET Framework 4.6.1
+- .NET Standard 2.0
 
 # History
 **v1.0**
