@@ -90,6 +90,9 @@ This method allows to subscribe to messages. Both single and stream of messages.
 string serverAddress = "localhost:50000";
 Subscriber subscriber = new Subscriber(serverAddress);
 
+// if you set the serverAddress in  config
+Subscriber subscriber = new Subscriber();
+
 // Subscribe
 string channel = "Sample.test1";
 subscriber.SubscribeToMessages(HandleIncomingMessage, channel);
@@ -125,7 +128,7 @@ This method allows to send messages to stream
 use case: a very large file in chunks or very frequently message sending rate 
 
 ```C#
- // init
+ // init with server address in code 
  string serverAddress = "localhost:50000";
  Sender sender = new Sender(serverAddress);
  
@@ -147,24 +150,41 @@ Cache, CacheKey, CacheTTL, CacheHit
 
 
 ### The Request objet:
-Reply Channel is set internally 
+explain here all the Request objet fields:
+Reply Channel is set internally, no need to do it  
 Timeout
 Cache, CacheKey, CacheTTL, CacheHit
+ID - set internally used to mutch RequestID to Response
+Channel, Metadata, Body
+
 ### Response object:
-RequestID
+explain here all the Response objet fields:
+RequestID - set internally, For read use only
+ReplyChannel - Reply Channel is set internally, no need to do it  
+CacheHit - Flag of the retuned data origin
+Metadata
+Body
 
 ### Method: subscribe to requests
 This method allows to subscribe to stream of messages. 
 
 ```C#
-// init
+// init with server address in code:
 string serverAddress = "localhost:50000";
-Responder listener = new Responder(serverAddress);
+Responder responder = new Responder(serverAddress);
+
+// if you set the serverAddress in  config
+Responder responder = new Responder();
+
 
 // Subscribe
 string channel = "MyChannel.SimpleRequest";
-listener.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
+responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
 
+// Same, With more params:
+responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
+
+// delegate to handle the incoming requests
 private Response HandleIncomingRequests(Request request)
 {
 ...
@@ -176,9 +196,12 @@ private Response HandleIncomingRequests(Request request)
 This method allows to subscribe to stream of messages
 
 ```C#
- // init
+ // init with server address in code:
 string serverAddress = "localhost:50000";
 Initiator initiator = new Initiator(serverAddress);
+
+// init with server address set in configuration:
+Initiator initiator = new Initiator();
 
 // Send Request
 Request request = new Request()
@@ -186,12 +209,15 @@ Request request = new Request()
                 Channel = "MyChannel.SimpleRequest",
                 Metadata = "MyMetadata",
                 Body = Tools.Converter.ToByteArray("A Simple Request."),
-                Timeout = 5000,
-                CacheKey = "",
-                CacheTTL = 0
+                Timeout = 5000, // Need to explain this
+                CacheKey = "", // Need to explain this
+                CacheTTL = 0 // Need to explain this
             };
             
 Response response = initiator.SendRequest(request);
+
+// can also add clientDisplayName param: 
+Response response = initiator.SendRequest(request, "clientDisplayName");
 
 ```
 
