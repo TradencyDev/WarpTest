@@ -47,7 +47,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Exception in RequestReplyInitiator_Wrapper.SendRequest");
+                logger.LogError(ex, "Exception in Initiator.SendRequest");
                 return null;
             }
         }

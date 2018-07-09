@@ -28,7 +28,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
         }
 
 
-        public async void SubscribeToRequestsAsync(RespondDelegate handler, string channel, string group = "", string clientDisplayName = "")
+        public void SubscribeToRequestsAsync(RespondDelegate handler, string channel, string group = "", string clientDisplayName = "")
         {
             logger.LogTrace($"Start Responder->SubscribeToRequestsAsync. Channel:'{channel}', Group:'{group}', client_tag:'{clientDisplayName}' ");
 
@@ -42,7 +42,20 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
 
 
                 // send requests to end-user and post his response to queue
-                while (true)
+                CommunicationWithEndUser(handler);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Exception in SubscribeToRequestsAsync");
+            }
+        }
+
+        private async void CommunicationWithEndUser(RespondDelegate handler)
+        {
+            while (true)
+            {
+                // send requests to end-user and post his response to queue
+                try
                 {
                     // await for Request from queue
                     InnerRequest innerRequest = await _RecivedRequests.ReceiveAsync();
@@ -59,12 +72,13 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
                     // Send response - Add (Post) response to queue
                     _ResponsesToSend.Post(innerResponse);
                 }
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Exception in SubscribeToRequestsAsync");
+                catch (Exception ex)
+                {
+                    //throw ex;
+                }
             }
         }
+
 
         private async Task GrpcListenAndRespondAsync(string channel, string group, string clientDisplayName)
         {   

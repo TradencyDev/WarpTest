@@ -19,14 +19,14 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
         {
             // init
             string serverAddress = "localhost:50000";
-            Initiator wrapper = new Initiator(serverAddress);
+            Initiator initiator = new Initiator(serverAddress);
 
             // Send Request
             Request request = CreateSimpleRequest();
 
             try
             {
-                Response response = wrapper.SendRequest(request);
+                Response response = initiator.SendRequest(request);
 
                 LogResponse(response);
             }
@@ -42,7 +42,7 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
                 for (int i = 0; i < 4; i++)
                 {
                     Request request2 = CreateRequestWithObjects(i);
-                    Response response2 = wrapper.SendRequest(request2);
+                    Response response2 = initiator.SendRequest(request2);
 
                     LogResponse(response2);
                 }
@@ -70,7 +70,7 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
         {
             CustomMetadata metadata = new CustomMetadata() { MyProperty = i, Info = "My info" };
 
-            MyMessgae messgae = new MyMessgae() { intProperty = i, strProperty = $"Request {i}" };
+            MyMessage messgae = new MyMessage() { intProperty = i, strProperty = $"Request {i}" };
 
             return new Request()
             {

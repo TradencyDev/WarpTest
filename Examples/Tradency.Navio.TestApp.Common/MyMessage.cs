@@ -4,7 +4,7 @@ using Tools = Tradency.Navio.SDK.csharp.Tools;
 namespace Tradency.Navio.TestApp.Common
 {
     [Serializable]
-    public class MyMessgae
+    public class MyMessage
     {
         public int intProperty { get; set; }
         public string strProperty { get; set; }

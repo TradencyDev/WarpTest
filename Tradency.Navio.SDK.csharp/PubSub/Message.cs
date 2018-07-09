@@ -1,4 +1,5 @@
-﻿using InnerMessage = Tradency.Navio.Grpc.Message;
+﻿using Tradency.Navio.SDK.csharp.Tools;
+using InnerMessage = Tradency.Navio.Grpc.Message;
 
 namespace Tradency.Navio.SDK.csharp.PubSub
 {
@@ -11,6 +12,16 @@ namespace Tradency.Navio.SDK.csharp.PubSub
             Channel = innerMessage.Channel;
             Metadata = innerMessage.Metadata;
             Body = innerMessage.Body.ToByteArray();
+        }
+
+        internal InnerMessage ToInnerMessage()
+        {
+            return new InnerMessage()
+            {
+                Channel = this.Channel,
+                Metadata = this.Metadata,
+                Body = Converter.ToByteString(this.Body)
+            };
         }
 
         public string Channel { get; set; }

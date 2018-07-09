@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{441CFA4C-9CE0-4D3E-8850-369A276BDD10}</ProjectGuid>
+    <ProjectGuid>{797A5720-F75A-437B-93CF-8DF9555FC831}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tradency.Navio.TestApp.Common</RootNamespace>
@@ -41,11 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomMetadata.cs" />
-    <Compile Include="MyMessgae.cs" />
+    <Compile Include="MyMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
+    <ProjectReference Include="..\..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
       <Project>{7baed1a9-d17b-4906-9c32-183b94bee463}</Project>
       <Name>Tradency.Navio.SDK.csharp</Name>
     </ProjectReference>

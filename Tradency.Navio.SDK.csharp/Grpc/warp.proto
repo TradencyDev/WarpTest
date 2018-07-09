@@ -66,6 +66,6 @@ message Response {
     string ReplyChannel =2;
     string Metadata = 3;
     bytes  Body = 4;
-    bool   ChachHit =5;
+    bool   CacheHit =5;
     bytes  Context=6;
 }

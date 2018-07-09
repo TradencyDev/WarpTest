@@ -103,12 +103,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
+    <ProjectReference Include="..\..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
       <Project>{7baed1a9-d17b-4906-9c32-183b94bee463}</Project>
       <Name>Tradency.Navio.SDK.csharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tradency.Navio.TestApp.Common\Tradency.Navio.TestApp.Common.csproj">
-      <Project>{441cfa4c-9ce0-4d3e-8850-369a276bdd10}</Project>
+      <Project>{797a5720-f75a-437b-93cf-8df9555fc831}</Project>
       <Name>Tradency.Navio.TestApp.Common</Name>
     </ProjectReference>
   </ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using Tradency.Navio.SDK.csharp.PubSub;
 using Tradency.Navio.TestApp.Common;
@@ -20,14 +21,14 @@ namespace Navio.csharp.TestApp.PubsubSender
         {
             // init
             string serverAddress = "localhost:50000";
-            Sender wrapper = new Sender(serverAddress);
+            Sender sender = new Sender(serverAddress);
 
             // SendMessage
             Message message1 = CreateSimpleStringMessage();
 
             try
             {
-                wrapper.SendMessage(message1);
+                sender.SendMessage(message1);
 
                 logger.LogTrace($"PubsubSender send message 1, to channel {message1.Channel}.");
             }
@@ -40,7 +41,7 @@ namespace Navio.csharp.TestApp.PubsubSender
 
             try
             {
-                wrapper.SendMessage(message2);
+                sender.SendMessage(message2);
 
                 logger.LogTrace($"PubsubSender send message 2, to channel {message1.Channel}.");
             }
@@ -50,13 +51,35 @@ namespace Navio.csharp.TestApp.PubsubSender
             }
         }
 
-        private Message CreateSimpleStringMessage()
+        public void StreamMessages()
+        {
+            // init
+            string serverAddress = "localhost:50000";
+            Sender sender = new Sender(serverAddress);
+
+            Message message;
+
+            for (int i = 1; i < 11; i++)
+            {
+                message = CreateSimpleStringMessage(i);
+
+                sender.StreamMessage(message);
+
+                Thread.Sleep(1000);
+            }
+            sender.ClosesMessageStreamAsync();
+
+            message = CreateSimpleStringMessage(99);
+            sender.SendMessage(message);
+        }
+
+        private Message CreateSimpleStringMessage(int i = 0)
         {
             return new Message()
             {
                 Channel = "Sample.test1",
                 Metadata = "A sample string Metadata",
-                Body = Tools.Converter.ToByteArray("Pubsub test message")
+                Body = Tools.Converter.ToByteArray("Pubsub test message "+ i)
             };
         }
 
@@ -64,7 +87,7 @@ namespace Navio.csharp.TestApp.PubsubSender
         {
             CustomMetadata metadata = new CustomMetadata() { MyProperty = 1, Info = "My info" };
 
-            MyMessgae messgae = new MyMessgae() { intProperty = 99, strProperty = "message body" };
+            MyMessage messgae = new MyMessage() { intProperty = 99, strProperty = "message body" };
 
             return new Message()
             {

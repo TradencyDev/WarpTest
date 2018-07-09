@@ -32,7 +32,7 @@ namespace Tradency.Navio.Grpc {
             "bmVsGAUgASgJEg8KB1RpbWVvdXQYBiABKAUSEAoIQ2FjaGVLZXkYByABKAkS",
             "EAoIQ2FjaGVUVEwYCCABKAUSDwoHQ29udGV4dBgJIAEoDCJ2CghSZXNwb25z",
             "ZRIRCglSZXF1ZXN0SUQYASABKAkSFAoMUmVwbHlDaGFubmVsGAIgASgJEhAK",
-            "CE1ldGFkYXRhGAMgASgJEgwKBEJvZHkYBCABKAwSEAoIQ2hhY2hIaXQYBSAB",
+            "CE1ldGFkYXRhGAMgASgJEgwKBEJvZHkYBCABKAwSEAoIQ2FjaGVIaXQYBSAB",
             "KAgSDwoHQ29udGV4dBgGIAEoDDLGAgoEd2FycBIrCgtTZW5kTWVzc2FnZRIN",
             "LndhcnAuTWVzc2FnZRoLLndhcnAuRW1wdHkiABIzChFTZW5kTWVzc2FnZVN0",
             "cmVhbRINLndhcnAuTWVzc2FnZRoLLndhcnAuRW1wdHkiACgBEj8KElN1YnNj",
@@ -49,7 +49,7 @@ namespace Tradency.Navio.Grpc {
             new pbr::GeneratedClrTypeInfo(typeof(global::Tradency.Navio.Grpc.Message), global::Tradency.Navio.Grpc.Message.Parser, new[]{ "Channel", "Metadata", "Body" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tradency.Navio.Grpc.SubscribeRequest), global::Tradency.Navio.Grpc.SubscribeRequest.Parser, new[]{ "Channel", "Group" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Tradency.Navio.Grpc.Request), global::Tradency.Navio.Grpc.Request.Parser, new[]{ "ID", "Channel", "Metadata", "Body", "ReplyChannel", "Timeout", "CacheKey", "CacheTTL", "Context" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Tradency.Navio.Grpc.Response), global::Tradency.Navio.Grpc.Response.Parser, new[]{ "RequestID", "ReplyChannel", "Metadata", "Body", "ChachHit", "Context" }, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Tradency.Navio.Grpc.Response), global::Tradency.Navio.Grpc.Response.Parser, new[]{ "RequestID", "ReplyChannel", "Metadata", "Body", "CacheHit", "Context" }, null, null, null)
           }));
     }
     #endregion
@@ -881,7 +881,7 @@ namespace Tradency.Navio.Grpc {
       replyChannel_ = other.replyChannel_;
       metadata_ = other.metadata_;
       body_ = other.body_;
-      chachHit_ = other.chachHit_;
+      cacheHit_ = other.cacheHit_;
       context_ = other.context_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -935,14 +935,14 @@ namespace Tradency.Navio.Grpc {
       }
     }
 
-    /// <summary>Field number for the "ChachHit" field.</summary>
-    public const int ChachHitFieldNumber = 5;
-    private bool chachHit_;
+    /// <summary>Field number for the "CacheHit" field.</summary>
+    public const int CacheHitFieldNumber = 5;
+    private bool cacheHit_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool ChachHit {
-      get { return chachHit_; }
+    public bool CacheHit {
+      get { return cacheHit_; }
       set {
-        chachHit_ = value;
+        cacheHit_ = value;
       }
     }
 
@@ -974,7 +974,7 @@ namespace Tradency.Navio.Grpc {
       if (ReplyChannel != other.ReplyChannel) return false;
       if (Metadata != other.Metadata) return false;
       if (Body != other.Body) return false;
-      if (ChachHit != other.ChachHit) return false;
+      if (CacheHit != other.CacheHit) return false;
       if (Context != other.Context) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -986,7 +986,7 @@ namespace Tradency.Navio.Grpc {
       if (ReplyChannel.Length != 0) hash ^= ReplyChannel.GetHashCode();
       if (Metadata.Length != 0) hash ^= Metadata.GetHashCode();
       if (Body.Length != 0) hash ^= Body.GetHashCode();
-      if (ChachHit != false) hash ^= ChachHit.GetHashCode();
+      if (CacheHit != false) hash ^= CacheHit.GetHashCode();
       if (Context.Length != 0) hash ^= Context.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1017,9 +1017,9 @@ namespace Tradency.Navio.Grpc {
         output.WriteRawTag(34);
         output.WriteBytes(Body);
       }
-      if (ChachHit != false) {
+      if (CacheHit != false) {
         output.WriteRawTag(40);
-        output.WriteBool(ChachHit);
+        output.WriteBool(CacheHit);
       }
       if (Context.Length != 0) {
         output.WriteRawTag(50);
@@ -1045,7 +1045,7 @@ namespace Tradency.Navio.Grpc {
       if (Body.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeBytesSize(Body);
       }
-      if (ChachHit != false) {
+      if (CacheHit != false) {
         size += 1 + 1;
       }
       if (Context.Length != 0) {
@@ -1074,8 +1074,8 @@ namespace Tradency.Navio.Grpc {
       if (other.Body.Length != 0) {
         Body = other.Body;
       }
-      if (other.ChachHit != false) {
-        ChachHit = other.ChachHit;
+      if (other.CacheHit != false) {
+        CacheHit = other.CacheHit;
       }
       if (other.Context.Length != 0) {
         Context = other.Context;
@@ -1108,7 +1108,7 @@ namespace Tradency.Navio.Grpc {
             break;
           }
           case 40: {
-            ChachHit = input.ReadBool();
+            CacheHit = input.ReadBool();
             break;
           }
           case 50: {

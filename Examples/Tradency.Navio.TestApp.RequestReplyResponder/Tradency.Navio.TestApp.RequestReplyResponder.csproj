@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CF69D17B-803B-4634-96F5-D9942C6D68F6}</ProjectGuid>
+    <ProjectGuid>{DBB8800E-6C25-49E3-ADAD-90D9C990D226}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Tradency.Navio.TestApp.RequestReplyInitiator</RootNamespace>
-    <AssemblyName>Tradency.Navio.TestApp.RequestReplyInitiator</AssemblyName>
+    <RootNamespace>Tradency.Navio.TestApp.RequestReplyResponder</RootNamespace>
+    <AssemblyName>Tradency.Navio.TestApp.RequestReplyResponder</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -90,19 +90,19 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestReplyInitiator.cs" />
+    <Compile Include="RequestReplyResponder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
+    <ProjectReference Include="..\..\Tradency.Navio.SDK.csharp\Tradency.Navio.SDK.csharp.csproj">
       <Project>{7baed1a9-d17b-4906-9c32-183b94bee463}</Project>
       <Name>Tradency.Navio.SDK.csharp</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tradency.Navio.TestApp.Common\Tradency.Navio.TestApp.Common.csproj">
-      <Project>{441cfa4c-9ce0-4d3e-8850-369a276bdd10}</Project>
+      <Project>{797a5720-f75a-437b-93cf-8df9555fc831}</Project>
       <Name>Tradency.Navio.TestApp.Common</Name>
     </ProjectReference>
   </ItemGroup>

@@ -14,7 +14,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             ReplyChannel = inner.ReplyChannel;
             Metadata = inner.Metadata;
             Body = inner.Body.ToByteArray();
-            ChachHit = inner.ChachHit;
+            CacheHit = inner.CacheHit;
         }
 
         public Response(Request request)
@@ -33,7 +33,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
                 ReplyChannel = ReplyChannel,
                 Metadata = this.Metadata,
                 Body = ByteString.CopyFrom(this.Body),
-                ChachHit = this.ChachHit
+                CacheHit = this.CacheHit
             };
         }
 
@@ -42,7 +42,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
         public string ReplyChannel { get; set; }
         public string Metadata { get; set; }
         public byte[] Body { get; set; }
-        public bool ChachHit { get; set; }
+        public bool CacheHit { get; set; }
         #endregion
     }
 }

@@ -20,11 +20,11 @@ namespace Navio.csharp.TestApp.PubsubSubscriber
         {
             // init
             string serverAddress = "localhost:50000";
-            Subscriber wrapper = new Subscriber(serverAddress);
+            Subscriber subscriber = new Subscriber(serverAddress);
 
             // Subscribe
             string channel = "Sample.test1";
-            wrapper.SubscribeToMessages(HandleIncomingMessage, channel);
+            subscriber.SubscribeToMessages(HandleIncomingMessage, channel);
 
             logger.LogTrace($"PubsubSubscriber Subscribe to channel {channel}.");
         }
@@ -35,9 +35,9 @@ namespace Navio.csharp.TestApp.PubsubSubscriber
             {
                 string strMsg = string.Empty;
                 object body = Tools.Converter.FromByteArray(message.Body);
-                if (body is MyMessgae)
+                if (body is MyMessage)
                 {
-                    strMsg = ((MyMessgae)body).ToString();
+                    strMsg = ((MyMessage)body).ToString();
                 }
                 else if (body is string)
                 {

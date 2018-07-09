@@ -19,11 +19,13 @@ namespace Navio.csharp.TestApp.RequestReplyResponder
         {
             // init
             string serverAddress = "localhost:50000";
-            Responder listener = new Responder(serverAddress);
+            Responder responder = new Responder(serverAddress);
 
             // Subscribe
             string channel = "MyChannel.SimpleRequest";
-            listener.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
+            responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
+
+            responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
         }
 
         private Response HandleIncomingRequests(Request request)
@@ -35,7 +37,7 @@ namespace Navio.csharp.TestApp.RequestReplyResponder
             {
                 Metadata = "Response Metadata",
                 Body = Tools.Converter.ToByteArray($"A Response to {request.ID}"),
-                ChachHit = false
+                CacheHit = false
             };
         }
 

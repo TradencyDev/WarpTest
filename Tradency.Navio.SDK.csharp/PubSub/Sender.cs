@@ -22,12 +22,7 @@ namespace Tradency.Navio.SDK.csharp.PubSub
         {
             try
             {
-                InnerMessage innerMessage = new InnerMessage()
-                {
-                    Channel = message.Channel,
-                    Metadata = message.Metadata,
-                    Body = Converter.ToByteString(message.Body)
-                };
+                InnerMessage innerMessage = message.ToInnerMessage();
 
                 Metadata metadata = null;
                 if (string.IsNullOrWhiteSpace(clientDisplayName))
@@ -49,6 +44,39 @@ namespace Tradency.Navio.SDK.csharp.PubSub
 
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async void StreamMessage(Message message, string clientDisplayName = "")
+        {
+            try
+            {
+                InnerMessage innerMessage = message.ToInnerMessage();
+
+                Metadata metadata = null;
+                if (string.IsNullOrWhiteSpace(clientDisplayName))
+                {
+                    metadata = new Metadata { { "client_tag", clientDisplayName } };
+                }
+
+                await GetWarpGrpcClient().SendMessageStream(metadata).RequestStream.WriteAsync(innerMessage);
+            }
+            catch (RpcException ex)
+            {
+                logger.LogError(ex, "Exception in StreamMessage");
+
+                throw new RpcException(ex.Status);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Exception in StreamMessage");
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async void ClosesMessageStreamAsync()
+        {
+            await GetWarpGrpcClient().SendMessageStream().RequestStream.CompleteAsync();
         }
 
         private void InitLogger()

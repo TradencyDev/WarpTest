@@ -80,7 +80,7 @@ namespace Tradency.Navio.SDK.csharp.PubSub
         {
             //object objBody = Converter.FromByteArray(message.Body.ToByteArray());
             string objBody = "";
-            logger.LogInformation($"PubsubSubscriber_Wrapper Recived Message: Metadata:'{message.Metadata}', Channel:'{message.Channel}', Body:'{objBody}'");
+            logger.LogInformation($"Subscriber Recived Message: Metadata:'{message.Metadata}', Channel:'{message.Channel}', Body:'{objBody}'");
         }
 
         private void InitLogger()

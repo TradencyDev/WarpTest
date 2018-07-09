@@ -22,6 +22,8 @@ namespace Navio.csharp.TestApp.PubsubSender
         {
             PubsubSender pubsubSender = new PubsubSender();
             pubsubSender.SendMessage();
+
+            pubsubSender.StreamMessages();
         }
     }
 }
