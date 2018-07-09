@@ -81,6 +81,7 @@ Allows to connects a publisher to one or a set of subscribers
 This method allows to subscribe to messages. Both single and stream of messages.
 Simply pass a delegte (cllback) that will handle the incoming message(s).
 The implementation uses `await` and does not block the continuation of the code execution.
+
 **Parameters**:
 - handler - Mandatory. Delegte (callback) that will handle the incoming messages
 - Channel - Mandatory. See Main concepts
@@ -110,22 +111,23 @@ private void HandleIncomingMessage(Message message)
 ```
 
 ### Method: send single
-This method allows to send a single message
-parameters:
-- Message - mandatory. Message to send. 
-- clientDisplayName - optional. Client Display Name.
+This method allows to send a single message.
 
-Message object fields:
+**parameters**:
+- Message - Mandatory. The actual Message that will be sent
+- clientDisplayName - Optional. See Main concepts
+
+The object `Message` contains the following fields (See Main concepts for more details on each field):
 - Channel
 - Metadata
 - Body
 
+Initialize `Sender` with server address from code (also can be initialized using config file):
 ```C#
- // initialize Sender with server address or use configuration
  string serverAddress = "localhost:50000";
  Sender sender = new Sender(serverAddress);
  
- // Create the message
+// Create the message
 Message message1 = new Message()
 {
     Channel = "Sample.test1",
@@ -137,18 +139,36 @@ sender.SendMessage(message1);
 ```
 
 ### Method: send stream
-This method allows to send messages to stream
-use case: a very large file in chunks or very frequently message sending rate 
+This method allows to send stream of messages.
+Use case: a very large file in chunks or very frequently message sending rate.
 
+Initialize `Sender` with server address from code (also can be initialized using config file):
 ```C#
- // init with server address in code 
- string serverAddress = "localhost:50000";
- Sender sender = new Sender(serverAddress);
+string serverAddress = "localhost:50000";
+Sender sender = new Sender(serverAddress);
+
+Message message;
+
+for (int i = 1; i < 11; i++)
+{
+    message = CreateSimpleStringMessage(i);
+    
+    sender.StreamMessage(message);
+
+    Thread.Sleep(1000);
+}
+sender.ClosesMessageStreamAsync();
+
  
- // TODO: add creation of many messages... 
- sender.StreamMessage(message);
- sender.ClosesMessageStreamAsync()
- 
+private Message CreateSimpleStringMessage(int i = 0)
+{
+    return new Message()
+    {
+        Channel = "Sample.test1",
+        Metadata = "A sample string Metadata",
+        Body = Tools.Converter.ToByteArray("Pubsub test message "+ i)
+    };
+}
 ```
 
 # Usage: req\rep
