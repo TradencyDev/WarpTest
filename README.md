@@ -9,7 +9,7 @@ The SDK implements all communication patterns available through the Navio server
 - pub\sub
 - req\rep
 
-# Install via nuget:
+# Install via Nuget:
 ```
   Install-Package WarpTest
 ```
@@ -72,7 +72,7 @@ TODO: add content for what is unique about the concept of Navio as opose to rabb
 
 # Usage: pub\sub
 Employing several variations of point to point pub-sub communication style patterns.
-Allows to connects a publisher to one or a set of subscribers
+Allows to connect a publisher to one or a set of subscribers
 - Subscribe to messages
 - Send stream
 - Send single message
@@ -85,13 +85,13 @@ Struct used to send and receive messages using the pub\sub patterns. Contains th
 
 ### Method: Subscribe
 This method allows to subscribe to messages. Both single and stream of messages.
-Simply pass a delegte (cllback) that will handle the incoming message(s).
+Simply pass a delegate (callback) that will handle the incoming message(s).
 The implementation uses `await` and does not block the continuation of the code execution.
 
 **Parameters**:
-- handler - Mandatory. Delegte (callback) that will handle the incoming messages
+- handler - Mandatory. Delegate (callback) that will handle the incoming messages
 - Channel - Mandatory. See Main concepts
-- Group  - Optional. See Main concepts
+- Group - Optional. See Main concepts
 - clientDisplayName - Optional. See Main concepts
 
 Initialize `Subscriber` with server address from code:
@@ -173,15 +173,15 @@ private Message CreateSimpleStringMessage(int i = 0)
 ```
 
 # Usage: req\rep
-Request reply communication patteren. Allows to cache the response at the Navio server.
+Request reply communication pattern. Allows to cache the response at the Navio server.
 - Subscribe to requests
 - Send request
  
 ### Cache mechanism
-Navio server allows to store each response in a dedicated cache system. Each requests can specify whether or not to use the cache.
+Navio server allows to store each response in a dedicated cache system. Each request can specify whether or not to use the cache.
 In case the cache is used, the Navio server will try to return the response directly from cache and reduce latency.
 
-To use the cache mechanism add the followint parameters to each `Request`:
+To use the cache mechanism, add the following parameters to each `Request`:
 - CacheKey - Unique key to store the response in the Navio cache mechanism.
 - CacheTTL - Cahce data Time to live in milliseconds per CacheKey.
 
@@ -232,7 +232,7 @@ Subscribe
 string channel = "MyChannel.SimpleRequest";
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
 
-// or with optional params:
+// or with optional parameters:
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
 
 // delegate to handle the incoming requests
