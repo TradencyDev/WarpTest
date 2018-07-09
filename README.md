@@ -88,11 +88,13 @@ parameters:
 - Group  - optional. see Main concepts
 - clientDisplayName - optional. Client Display Name.
 
+ Initialize `Subscriber` with server address or use configuration
 ```C#
-// init
 string serverAddress = "localhost:50000";
 Subscriber subscriber = new Subscriber(serverAddress);
-
+```
+Initialize `Subscriber` with server address set in configuration
+```C#
 // if you set the serverAddress in  config
 Subscriber subscriber = new Subscriber();
 
