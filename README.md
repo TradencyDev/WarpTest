@@ -61,44 +61,44 @@ See exactly how in the code examples in this document.
 
 
 # Usage: Main concepts
+TODO: add content for what is unique about the concept of Navio as opose to rabbit & kafka
 
-- Channel: represents the endpoint/s target/s. One-to-one or one-to-many. Real-Time Multicast
-- Group: logical grouping. One of the group for each and every group. all endpoints with no group (the Empty group)
-- Metadata: the metadata allows to pass additional information with the message. can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
-
-- Body: the actual content of the message. can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
-
-- Client Display Name. optional. Displayed by API
+- Channel: Represents the endpoint target. One-to-one or one-to-many. Real-Time Multicast.
+- Group: Logical grouping. Only one endpoint in each group will receive the message. Endpoint may be configured with no group value to always receive the channel messages.
+- Metadata: The metadata allows to pass additional information with the message. Can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
+- Body: The actual content of the message. Can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
+- Client Display Name: Optional field, Displayed in logs, tracing and Navio dashboard.
 
 
 # Usage: pub\sub
 Employing several variations of point to point pub-sub communication style patterns.
 Allows to connects a publisher to one or a set of subscribers
-- Subscribe to messages.
+- Subscribe to messages
 - Send stream
 - Send single message
 
-### Method: subscribe
+### Method: Subscribe
 This method allows to subscribe to messages. Both single and stream of messages.
-Pass a delegte (cllback) that will handle the incoming messages
-The implementation wait for a message ("awit for a task", not bloking not polling)
-parameters:
-- handler - mandatory. delegte (cllback) that will handle the incoming messages
-- Channel - mandatory. see Main concepts
-- Group  - optional. see Main concepts
-- clientDisplayName - optional. Client Display Name.
+Simply pass a delegte (cllback) that will handle the incoming message(s).
+The implementation uses `await` and does not block the continuation of the code execution.
+**Parameters**:
+- handler - Mandatory. Delegte (callback) that will handle the incoming messages
+- Channel - Mandatory. See Main concepts
+- Group  - Optional. See Main concepts
+- clientDisplayName - Optional. See Main concepts
 
- Initialize `Subscriber` with server address or use configuration
+Initialize `Subscriber` with server address from code:
 ```C#
 string serverAddress = "localhost:50000";
 Subscriber subscriber = new Subscriber(serverAddress);
 ```
-Initialize `Subscriber` with server address set in configuration
+Initialize `Subscriber` with server address set in configuration:
 ```C#
-// if you set the serverAddress in  config
 Subscriber subscriber = new Subscriber();
+```
 
-// Subscribe
+Subscribe:
+```C#
 string channel = "Sample.test1";
 subscriber.SubscribeToMessages(HandleIncomingMessage, channel);
 
