@@ -77,6 +77,12 @@ Allows to connects a publisher to one or a set of subscribers
 - Send stream
 - Send single message
 
+### The `Message` object:
+Struct used to send and receive messages using the pub\sub patterns. Contains the following fields (See Main concepts for more details on each field):
+- Channel
+- Metadata
+- Body
+
 ### Method: Subscribe
 This method allows to subscribe to messages. Both single and stream of messages.
 Simply pass a delegte (cllback) that will handle the incoming message(s).
@@ -116,11 +122,6 @@ This method allows to send a single message.
 **parameters**:
 - Message - Mandatory. The actual Message that will be sent
 - clientDisplayName - Optional. See Main concepts
-
-The object `Message` contains the following fields (See Main concepts for more details on each field):
-- Channel
-- Metadata
-- Body
 
 Initialize `Sender` with server address from code (also can be initialized using config file):
 ```C#
@@ -172,56 +173,66 @@ private Message CreateSimpleStringMessage(int i = 0)
 ```
 
 # Usage: req\rep
-Two way communication patteren, enables Cache stored at Navio server.
-- subscribe to requests
-- send request
+Request reply communication patteren. Allows to cache the response at the Navio server.
+- Subscribe to requests
+- Send request
  
 ### Cache mechanism
-Cache, CacheKey, CacheTTL, CacheHit
-- CacheKey  Key to store cache
-- CacheTTL  Cahce data Time to live
-- CacheHit  Flag of the retuned data origin
+Navio server allows to store each response in a dedicated cache system. Each requests can specify whether or not to use the cache.
+In case the cache is used, the Navio server will try to return the response directly from cache and reduce latency.
 
+To use the cache mechanism add the followint parameters to each `Request`:
+- CacheKey - Unique key to store the response in the Navio cache mechanism.
+- CacheTTL - Cahce data Time to live in milliseconds per CacheKey.
 
-### The Request objet:
-explain here all the Request objet fields:
-- Reply Channel is set internally, no need to do it  
-- Timeout
-- Cache, CacheKey, CacheTTL, CacheHit
-- ID - set internally used to mutch RequestID to Response
-- Channel, Metadata, Body
+In the `Response` object you will receive an indication whether it was returned from cache:
+- CacheHit - Indication if the response was returned from Navio cache.
 
-### Response object:
-explain here all the Response objet fields:
-- RequestID - set internally, For read use only
-- ReplyChannel - Reply Channel is set internally, no need to do it  
-- CacheHit - Flag of the retuned data origin
+### The Request object:
+Struct used to send the request under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
+- ID - Set internally, used to match Request to Response.
+- Channel - The channel that the `Responder` subscribed on.
+- Reply Channel - Set internally, no need to set value.
+- Timeout - Max time for the response to return. Set per request. If exceeded an exception is thrown.
+- CacheKey
+- CacheTTL
 - Metadata
 - Body
 
-### Method: subscribe to requests
-This method allows to subscribe to stream of messages. 
-parameters:
-- handler - mandatory. delegte (cllback) that will handle the incoming requests
-- Channel - mandatory. see Main concepts
-- Group  - optional. see Main concepts
-- clientDisplayName - optional. Client Display Name.
+### Response object:
+Struct used to send the response under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
+- RequestID - Set internally, used to match Request to Response.
+- ReplyChannel - Reply Channel is set internally, no need to do it.
+- CacheHit - Indication if the response was returned from Navio cache.
+- Metadata
+- Body
 
+### Method: Subscribe to requests
+This method allows to subscribe to receive requests.
 
+**parameters**:
+- Handler - Mandatory. Delegate (callback) that will handle the incoming requests.
+- Channel - Mandatory. This sets the channel to send requests to.
+- Group - Optional. See Main concepts
+- clientDisplayName - Optional. See Main concepts
+
+Initialize `Responder` with server address from code:
 ```C#
-// init with server address in code:
 string serverAddress = "localhost:50000";
 Responder responder = new Responder(serverAddress);
+```
 
-// if you set the serverAddress in  config
+Initialize `Responder` with server address set in configuration:
+```C#
 Responder responder = new Responder();
+```
 
-
-// Subscribe
+Subscribe
+```C#
 string channel = "MyChannel.SimpleRequest";
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
 
-// Same, With more params:
+// or with optional params:
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
 
 // delegate to handle the incoming requests
@@ -229,40 +240,39 @@ private Response HandleIncomingRequests(Request request)
 {
 ...
 }
-
 ```
 
 ### Method: send request
-This method allows to subscribe to stream of messages
-parameters:
-- request - mandatory. request to send. 
-- clientDisplayName - optional. Client Display Name.
+This method allows to send a request to the `Responder`
 
+**parameters**:
+- Request - Mandatory. The `Request` object to send.
+- clientDisplayName - Optional. See Main concepts
+
+Initialize `Initiator` with server address from code (also can be initialized using config file):
 ```C#
- // init with server address in code:
 string serverAddress = "localhost:50000";
 Initiator initiator = new Initiator(serverAddress);
+```
 
-// init with server address set in configuration:
-Initiator initiator = new Initiator();
-
-// Send Request
+Send Request
+```C#
 Request request = new Request()
             {
                 Channel = "MyChannel.SimpleRequest",
                 Metadata = "MyMetadata",
                 Body = Tools.Converter.ToByteArray("A Simple Request."),
-                Timeout = 5000, // Need to explain this
-                CacheKey = "", // Need to explain this
-                CacheTTL = 0 // Need to explain this
+                Timeout = 5000,
+                CacheKey = "Simple.CacheKey",
+                CacheTTL = 5000
             };
             
 Response response = initiator.SendRequest(request);
 
 // can also add clientDisplayName param: 
 Response response = initiator.SendRequest(request, "clientDisplayName");
-
 ```
+
 # Supports:
 - .NET Framework 4.6.1
 - .NET Standard 2.0
