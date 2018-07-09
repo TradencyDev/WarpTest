@@ -188,7 +188,7 @@ To use the cache mechanism, add the following parameters to each `Request`:
 In the `Response` object you will receive an indication whether it was returned from cache:
 - CacheHit - Indication if the response was returned from Navio cache.
 
-### The Request object:
+### The `Request` object:
 Struct used to send the request under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
 - ID - Set internally, used to match Request to Response.
 - Channel - The channel that the `Responder` subscribed on.
@@ -199,7 +199,7 @@ Struct used to send the request under the req\rep pattern. Contains the followin
 - Metadata
 - Body
 
-### Response object:
+### The `Response` object:
 Struct used to send the response under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
 - RequestID - Set internally, used to match Request to Response.
 - ReplyChannel - Reply Channel is set internally, no need to do it.
