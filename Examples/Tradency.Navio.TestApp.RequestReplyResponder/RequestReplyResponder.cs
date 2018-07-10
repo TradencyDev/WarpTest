@@ -25,7 +25,7 @@ namespace Navio.csharp.TestApp.RequestReplyResponder
             string channel = "MyChannel.SimpleRequest";
             responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
 
-            responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
+            //responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
         }
 
         private Response HandleIncomingRequests(Request request)

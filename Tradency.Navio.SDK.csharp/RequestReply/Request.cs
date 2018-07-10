@@ -14,7 +14,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
 
         internal Request(InnerRequest innerRequest)
         {
-            ID = string.IsNullOrEmpty(innerRequest.ID) ? GetNextId().ToString() : innerRequest.ID;//innerRequest.ID;// 
+            ID = string.IsNullOrEmpty(innerRequest.ID) ? GetNextId().ToString() : innerRequest.ID; 
             Channel = innerRequest.Channel;
             Metadata = innerRequest.Metadata;
             Body = innerRequest.Body.ToByteArray();
@@ -24,15 +24,19 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             CacheTTL = innerRequest.CacheTTL;
         }
 
+        /// <summary>
+        /// Convert a Request to an InnerRequest
+        /// </summary>
+        /// <returns> An InnerRequest</returns>
         internal InnerRequest Convert()
         {
             return new InnerRequest()
             {
-                ID = GetNextId().ToString(),
+                ID = string.IsNullOrEmpty(ID) ? GetNextId().ToString() : ID,
                 Channel = this.Channel,
+                //ReplyChannel - Set only by Navio server
                 Metadata = this.Metadata,
                 Body = ByteString.CopyFrom(this.Body),
-                //ReplyChannel = this.ReplyChannel,
                 Timeout = this.Timeout,
                 CacheKey = this.CacheKey,
                 CacheTTL = this.CacheTTL,
@@ -40,18 +44,23 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
         }
         #endregion
 
+        
         #region Properties
 
         public string ID { get; set; }
         public string Channel { get; set; }
+        public string ReplyChannel { get; private set; }
         public string Metadata { get; set; }
         public byte[] Body { get; set; }
-        public string ReplyChannel { get; set; }
         public int Timeout { get; set; }
         public string CacheKey { get; set; }
-        public int CacheTTL { get; set; } 
+        public int CacheTTL { get; set; }
         #endregion
 
+        /// <summary>
+        /// Get an unique thread safety ID between 1 to 65535
+        /// </summary>
+        /// <returns></returns>
         private int GetNextId()
         {
             //return Interlocked.Increment(ref _id);

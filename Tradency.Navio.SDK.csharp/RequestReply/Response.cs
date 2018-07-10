@@ -6,7 +6,12 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
     public class Response
     {
         #region C'Tors
-        internal Response() { }
+
+        public Response(Request request)
+        {
+            RequestID = request.ID;
+            ReplyChannel = request.ReplyChannel;
+        }
 
         internal Response(InnerResponse inner)
         {
@@ -17,12 +22,6 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             CacheHit = inner.CacheHit;
         }
 
-        public Response(Request request)
-        {
-            RequestID = request.ID;
-            ReplyChannel = request.ReplyChannel;
-        }
-
         #endregion
 
         internal InnerResponse Convert()
@@ -30,16 +29,17 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             return new InnerResponse()
             {
                 RequestID = this.RequestID,
-                ReplyChannel = ReplyChannel,
+                ReplyChannel = this.ReplyChannel,
                 Metadata = this.Metadata,
                 Body = ByteString.CopyFrom(this.Body),
                 CacheHit = this.CacheHit
             };
         }
 
-        #region Properties
+        private string ReplyChannel { get; set; }
+
+        #region public Properties
         public string RequestID { get; set; }
-        public string ReplyChannel { get; set; }
         public string Metadata { get; set; }
         public byte[] Body { get; set; }
         public bool CacheHit { get; set; }
