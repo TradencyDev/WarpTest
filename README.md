@@ -63,11 +63,11 @@ See exactly how in the code examples in this document.
 # Usage: Main concepts
 TODO: add content for what is unique about the concept of Navio as opose to rabbit & kafka
 
-- Channel: Represents the endpoint target. One-to-one or one-to-many. Real-Time Multicast.
-- Group: Logical grouping. Only one endpoint in each group will receive the message. Endpoint may be configured with no group value to always receive the channel messages.
-- Metadata: The metadata allows to pass additional information with the message. Can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
-- Body: The actual content of the message. Can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
-- Client Display Name: Optional field, Displayed in logs, tracing and Navio dashboard.
+- **Channel:** Represents the endpoint target. One-to-one or one-to-many. Real-Time Multicast.
+- **Group:** Logical grouping. Only one endpoint in each group will receive the message. Endpoint may be configured with no group value to always receive the channel messages.
+- **Metadata:** The metadata allows to pass additional information with the message. Can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
+- **Body:** The actual content of the message. Can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
+- **Client Display Name:** Optional field, Displayed in logs, tracing and Navio dashboard.
 
 
 # Usage: pub\sub
