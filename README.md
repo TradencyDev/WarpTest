@@ -200,9 +200,12 @@ Struct used to send the request under the req\rep pattern. Contains the followin
 - Body
 
 ### The `Response` object:
-Struct used to send the response under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
+Struct used to send the response under the req\rep pattern. 
+
+The `Response` Constructors requires the corresponding 'Request' object.
+
+Contains the following fields (See Main concepts for more details on some field):
 - RequestID - Set internally, used to match Request to Response.
-- ReplyChannel - Reply Channel is set internally, no need to do it.
 - CacheHit - Indication if the response was returned from Navio cache.
 - Metadata
 - Body
@@ -238,7 +241,17 @@ responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "c
 // delegate to handle the incoming requests
 private Response HandleIncomingRequests(Request request)
 {
-...
+    // Convert the request Body to a string
+    string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
+    logger.LogDebug($"Respond to Request. ID:'{request.ID}', Channel:'{request.Channel}', Body:'{strBody}'");
+    
+    // Create the Response object
+    return new Response(request)
+    {
+        Metadata = "Response Metadata",
+        Body = Tools.Converter.ToByteArray($"A Response to {request.ID}"),
+        CacheHit = false
+    };
 }
 ```
 
@@ -271,6 +284,16 @@ Response response = initiator.SendRequest(request);
 
 // can also add clientDisplayName param: 
 Response response = initiator.SendRequest(request, "clientDisplayName");
+```
+
+# Tools
+The Navio SDK supplies converters to convert from a to the `body` that is is byte array format
+```C#
+// Convert the request Body to a string
+string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
+    
+// Convert a string to the request Body
+Body = Tools.Converter.ToByteArray("A Simple Request."),
 ```
 
 # Supports:
