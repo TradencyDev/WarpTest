@@ -190,9 +190,9 @@ In the `Response` object you will receive an indication whether it was returned 
 
 ### The `Request` object:
 Struct used to send the request under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
-- ID - Set internally, used to match Request to Response.
+- ID - Used to match Request to Response. If neglected it will be set internally. 
 - Channel - The channel that the `Responder` subscribed on.
-- Reply Channel - Set internally, no need to set value.
+- Reply Channel - Read only, Set internally.
 - Timeout - Max time for the response to return. Set per request. If exceeded an exception is thrown.
 - CacheKey
 - CacheTTL
@@ -287,7 +287,7 @@ Response response = initiator.SendRequest(request, "clientDisplayName");
 ```
 
 # Tools
-The Navio SDK supplies converters to convert from a to the `body` that is is byte array format
+The Navio SDK supplies converters to convert from and to the `body` that is in byte array format.
 ```C#
 // Convert the request Body to a string
 string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
