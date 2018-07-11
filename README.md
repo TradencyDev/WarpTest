@@ -14,6 +14,10 @@ The SDK implements all communication patterns available through the Navio server
   Install-Package WarpTest
 ```
 
+# Supports:
+- .NET Framework 4.6.1
+- .NET Standard 2.0
+
 
 # Configurations
 The only required configuration setting is the Navio server address.
@@ -34,7 +38,7 @@ Simply add the following to your appsettings.json:
 ```JSON
 {
   "Navio": {
-    "serverAddress": "ServerAddress:ServerPort"
+    "serverAddress": "{YourServerAddress}:{YourServerPort}"
   }
 }
 ```
@@ -49,7 +53,7 @@ Simply add the following to your app.config:
   </configSections>  
     
   <Navio>  
-    <add key="serverAddress" value="ServerAddress:ServerPort"/>
+    <add key="serverAddress" value="{YourServerAddress}:{YourServerPort}"/>
   </Navio>  
 </configuration>
 ```
@@ -64,7 +68,7 @@ See exactly how in the code examples in this document.
 TODO: add content for what is unique about the concept of Navio as opose to rabbit & kafka
 
 - **Channel:** Represents the endpoint target. One-to-one or one-to-many. Real-Time Multicast.
-- **Group:** Logical grouping. Only one endpoint in each group will receive the message. Endpoint may be configured with no group value to always receive the channel messages.
+- **Group:** Optional parameter when subscribing to a channel. A set of subscribers can define the same group so that only one of the subscribers within the group will receive a specific message. Used mainly for load balancing. Subscribing without the group parameter ensures receiving all the channel messages.
 - **Metadata:** The metadata allows to pass additional information with the message. Can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
 - **Body:** The actual content of the message. Can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
 - **Client Display Name:** Optional field, Displayed in logs, tracing and Navio dashboard.
@@ -89,7 +93,7 @@ Simply pass a delegate (callback) that will handle the incoming message(s).
 The implementation uses `await` and does not block the continuation of the code execution.
 
 **Parameters**:
-- handler - Mandatory. Delegate (callback) that will handle the incoming messages
+- Handler - Mandatory. Delegate (callback) that will handle the incoming messages
 - Channel - Mandatory. See Main concepts
 - Group - Optional. See Main concepts
 - clientDisplayName - Optional. See Main concepts
@@ -190,14 +194,14 @@ In the `Response` object you will receive an indication whether it was returned 
 
 ### The `Request` object:
 Struct used to send the request under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
-- ID - Used to match Request to Response. If neglected it will be set internally. 
-- Channel - The channel that the `Responder` subscribed on.
-- Reply Channel - Read only, Set internally.
-- Timeout - Max time for the response to return. Set per request. If exceeded an exception is thrown.
-- CacheKey
-- CacheTTL
-- Metadata
-- Body
+- ID - Optional. Used to match Request to Response. If omitted it will be set internally.
+- Channel - Mandatory. The channel that the `Responder` subscribed on.
+- Reply Channel - Read only, set internally.
+- Timeout - Mandatory. Max time for the response to return. Set per request. If exceeded an exception is thrown.
+- CacheKey - Optional.
+- CacheTTL - Optional.
+- Metadata - Mandatory.
+- Body - Mandatory.
 
 ### The `Response` object:
 Struct used to send the response under the req\rep pattern. 
@@ -206,9 +210,9 @@ The `Response` Constructors requires the corresponding 'Request' object.
 
 Contains the following fields (See Main concepts for more details on some field):
 - RequestID - Set internally, used to match Request to Response.
-- CacheHit - Indication if the response was returned from Navio cache.
-- Metadata
-- Body
+- CacheHit - Set internally, indication if the response was returned from Navio cache.
+- Metadata - Mandatory.
+- Body - Mandatory.
 
 ### Method: Subscribe to requests
 This method allows to subscribe to receive requests.
@@ -237,7 +241,9 @@ responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
 
 // or with optional parameters:
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel, "Group1", "clientDisplayName");
-
+```
+Handle requests and return responses
+```C#
 // delegate to handle the incoming requests
 private Response HandleIncomingRequests(Request request)
 {
@@ -255,8 +261,13 @@ private Response HandleIncomingRequests(Request request)
 }
 ```
 
-### Method: send request
-This method allows to send a request to the `Responder`
+### Send request methods
+The Navio SDK comes with two similar methods to send a `Request` and wait for the `Response`
+- `SendRequestAsync` returns the `Response` in a Task
+- `SendRequest` returns the `Response` to the Delegate (callback) supplied as a parameter
+
+### Method: send request Async
+This method allows to send a request to the `Responder`, it awits for the `Response` and returns it in a Task
 
 **parameters**:
 - Request - Mandatory. The `Request` object to send.
@@ -268,7 +279,7 @@ string serverAddress = "localhost:50000";
 Initiator initiator = new Initiator(serverAddress);
 ```
 
-Send Request
+Send Request and await for Response
 ```C#
 Request request = new Request()
             {
@@ -280,14 +291,26 @@ Request request = new Request()
                 CacheTTL = 5000
             };
             
-Response response = initiator.SendRequest(request);
+Response response = await initiator.SendRequest(request);
 
 // can also add clientDisplayName param: 
-Response response = initiator.SendRequest(request, "clientDisplayName");
+Response response = await initiator.SendRequest(request, "clientDisplayName");
+```
+### Method: send request
+This method allows to send a request to the `Responder`, and returns the `Response` to the Delegate (callback) supplied as a parameter
+
+```C#
+initiator.SendRequest(HandleResponse, request);
+
+// Method to handle the responses
+public void HandleResponse(Response response)
+{
+    ...
+}
 ```
 
 # Tools
-The Navio SDK supplies converters to convert from and to the `body` that is in byte array format.
+The Navio SDK supplies methods to convert from and to the `body` that is in byte array format.
 ```C#
 // Convert the request Body to a string
 string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
@@ -295,10 +318,6 @@ string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
 // Convert a string to the request Body
 Body = Tools.Converter.ToByteArray("A Simple Request."),
 ```
-
-# Supports:
-- .NET Framework 4.6.1
-- .NET Standard 2.0
 
 # History
 **v1.0**
