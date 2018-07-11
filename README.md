@@ -230,7 +230,7 @@ Initialize `Responder` with server address set in configuration:
 Responder responder = new Responder();
 ```
 
-Subscribe, Handle requests and return responses
+Subscribe
 ```C#
 string channel = "MyChannel.SimpleRequest";
 responder.SubscribeToRequestsAsync(HandleIncomingRequests, channel);
