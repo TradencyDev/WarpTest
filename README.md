@@ -82,7 +82,7 @@ Allows to connect a publisher to one or a set of subscribers
 - Send single message
 
 ### The `Message` object:
-Struct used to send and receive messages using the pub\sub patterns. Contains the following fields (See Main concepts for more details on each field):
+Struct used to send and receive messages using the pub\sub patterns. Contains the following fields (See [Main concepts](#usage-main-concepts) for more details on each field):
 - Channel
 - Metadata
 - Body
