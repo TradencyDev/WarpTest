@@ -14,6 +14,10 @@ The SDK implements all communication patterns available through the Navio server
   Install-Package WarpTest
 ```
 
+# Supports:
+- .NET Framework 4.6.1
+- .NET Standard 2.0
+
 
 # Configurations
 The only required configuration setting is the Navio server address.
@@ -314,10 +318,6 @@ string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
 // Convert a string to the request Body
 Body = Tools.Converter.ToByteArray("A Simple Request."),
 ```
-
-# Supports:
-- .NET Framework 4.6.1
-- .NET Standard 2.0
 
 # History
 **v1.0**
