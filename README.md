@@ -255,8 +255,13 @@ private Response HandleIncomingRequests(Request request)
 }
 ```
 
-### Method: send request
-This method allows to send a request to the `Responder`
+### Send request methods
+The Navio SDK comes with two similar methods to send a `Request` and wait for the `Response`
+- `SendRequestAsync` returns the `Response` in a Task
+- `SendRequest` returns the `Response` to the Delegate (callback) supplied as a parameter
+
+### Method: send request Async
+This method allows to send a request to the `Responder`, it awits for the `Response` and returns it in a Task
 
 **parameters**:
 - Request - Mandatory. The `Request` object to send.
@@ -268,7 +273,7 @@ string serverAddress = "localhost:50000";
 Initiator initiator = new Initiator(serverAddress);
 ```
 
-Send Request
+Send Request and await for Response
 ```C#
 Request request = new Request()
             {
@@ -280,10 +285,22 @@ Request request = new Request()
                 CacheTTL = 5000
             };
             
-Response response = initiator.SendRequest(request);
+Response response = await initiator.SendRequest(request);
 
 // can also add clientDisplayName param: 
-Response response = initiator.SendRequest(request, "clientDisplayName");
+Response response = await initiator.SendRequest(request, "clientDisplayName");
+```
+### Method: send request
+This method allows to send a request to the `Responder`, and returns the `Response` to the Delegate (callback) supplied as a parameter
+
+```C#
+initiator.SendRequest(HandleResponse, request);
+
+// Method to handle the responses
+public void HandleResponse(Response response)
+{
+    ...
+}
 ```
 
 # Tools
