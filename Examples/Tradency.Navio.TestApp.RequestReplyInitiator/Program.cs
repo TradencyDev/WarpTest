@@ -23,7 +23,7 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
         static void RunRequestTest()
         {
             RequestReplyInitiator initiator = new RequestReplyInitiator();
-            initiator.SendRequest();
+            initiator.SendRequestAsync();
         }
     }
 }

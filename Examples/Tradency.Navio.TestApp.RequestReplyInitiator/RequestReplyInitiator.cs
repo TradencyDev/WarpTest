@@ -15,18 +15,18 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
             InitLogger();
         }
 
-        public void SendRequest()
+        public async void SendRequestAsync()
         {
             // init
             string serverAddress = "localhost:50000";
             Initiator initiator = new Initiator(serverAddress);
 
-            // Send Request
+            // Send Request Async and await for response
             Request request = CreateSimpleRequest();
 
             try
             {
-                Response response = initiator.SendRequest(request);
+                Response response = await initiator.SendRequestAsync(request);
 
                 LogResponse(response);
             }
@@ -36,21 +36,25 @@ namespace Navio.csharp.TestApp.RequestReplyInitiator
             }
 
 
-            // another example
+            // Send Request with delegate to handle the responses
             try
             {
                 for (int i = 0; i < 4; i++)
                 {
                     Request request2 = CreateRequestWithObjects(i);
-                    Response response2 = initiator.SendRequest(request2);
-
-                    LogResponse(response2);
+                    initiator.SendRequest(HandleResponse, request2);
                 }
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Exception in SendRequest");
             }
+        }
+
+        // Method to handle the responses
+        public void HandleResponse(Response response)
+        {
+            LogResponse(response);
         }
 
         private Request CreateSimpleRequest()

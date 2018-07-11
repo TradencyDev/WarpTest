@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Grpc.Core;
 using Microsoft.Extensions.Logging;
-using Tradency.Navio.Grpc;
 using Tradency.Navio.SDK.csharp.Basic;
 using InnerRequest = Tradency.Navio.Grpc.Request;
 using InnerResponse = Tradency.Navio.Grpc.Response;
@@ -12,7 +12,7 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
     {
         private static ILogger logger;
 
-        //public Initiator() { }
+        public delegate void HandleResponseDelegate(Response response);
 
         public Initiator(string NavioAddress = null)
         {
@@ -21,7 +21,8 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             _warpAddress = NavioAddress;
         }
 
-        public Response SendRequest(Request request, string clientDisplayName = "")
+
+        public async void SendRequest(HandleResponseDelegate handler, Request request, string clientDisplayName = "")
         {
             try
             {
@@ -34,10 +35,16 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
                 }
 
                 InnerRequest innerRequest = request.Convert();
-                InnerResponse innerResponse = GetWarpGrpcClient().SendRequest(innerRequest, metadata);
+
+                // Send request and wait for response
+                InnerResponse innerResponse = await GetWarpGrpcClient().SendRequestAsync(innerRequest, metadata);
 
                 // convert InnerResponse to Response and return response to end user
-                return new Response(innerResponse);
+                Response response = new Response(innerResponse);
+
+                // send the response to the end-user response handler
+                handler(response);
+
             }
             catch (RpcException ex)
             {
@@ -48,6 +55,40 @@ namespace Tradency.Navio.SDK.csharp.RequestReply
             catch (Exception ex)
             {
                 logger.LogError(ex, "Exception in Initiator.SendRequest");
+
+                throw ex;
+            }
+        }
+
+        public async Task<Response> SendRequestAsync(Request request, string clientDisplayName = "")
+        {
+            try
+            {
+                //LogRequest(request);
+
+                Metadata metadata = null;
+                if (string.IsNullOrWhiteSpace(clientDisplayName))
+                {
+                    metadata = new Metadata { { "client_tag", clientDisplayName } };
+                }
+
+                InnerRequest innerRequest = request.Convert();
+                
+                // Send request and wait for response
+                InnerResponse innerResponse = await GetWarpGrpcClient().SendRequestAsync(innerRequest, metadata);
+
+                // convert InnerResponse to Response and return response to end user
+                return new Response(innerResponse);
+            }
+            catch (RpcException ex)
+            {
+                logger.LogError($"Grpc Exception in SendRequestAsync. Status: {ex.Status}");
+
+                throw new RpcException(ex.Status);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Exception in Initiator.SendRequestAsync");
                 return null;
             }
         }
