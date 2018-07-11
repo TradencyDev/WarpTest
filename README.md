@@ -94,9 +94,9 @@ The implementation uses `await` and does not block the continuation of the code 
 
 **Parameters**:
 - Handler - Mandatory. Delegate (callback) that will handle the incoming messages
-- Channel - Mandatory. See Main concepts
-- Group - Optional. See Main concepts
-- clientDisplayName - Optional. See Main concepts
+- Channel - Mandatory. [See Main concepts](#usage-main-concepts)
+- Group - Optional. [See Main concepts](#usage-main-concepts)
+- clientDisplayName - Optional. [See Main concepts](#usage-main-concepts)
 
 Initialize `Subscriber` with server address from code:
 ```C#
@@ -125,7 +125,7 @@ This method allows to send a single message.
 
 **parameters**:
 - Message - Mandatory. The actual Message that will be sent
-- clientDisplayName - Optional. See Main concepts
+- clientDisplayName - Optional. [See Main concepts](#usage-main-concepts)
 
 Initialize `Sender` with server address from code (also can be initialized using config file):
 ```C#
@@ -220,8 +220,8 @@ This method allows to subscribe to receive requests.
 **parameters**:
 - Handler - Mandatory. Delegate (callback) that will handle the incoming requests.
 - Channel - Mandatory. This sets the channel to send requests to.
-- Group - Optional. See Main concepts
-- clientDisplayName - Optional. See Main concepts
+- Group - Optional. [See Main concepts](#usage-main-concepts)
+- clientDisplayName - Optional. [See Main concepts](#usage-main-concepts)
 
 Initialize `Responder` with server address from code:
 ```C#
@@ -271,7 +271,7 @@ This method allows to send a request to the `Responder`, it awits for the `Respo
 
 **parameters**:
 - Request - Mandatory. The `Request` object to send.
-- clientDisplayName - Optional. See Main concepts
+- clientDisplayName - Optional. [See Main concepts](#usage-main-concepts)
 
 Initialize `Initiator` with server address from code (also can be initialized using config file):
 ```C#
