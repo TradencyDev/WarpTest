@@ -1,0 +1,71 @@
+syntax = "proto3";
+option csharp_namespace = "KubeMQ.Grpc"; // Namespace for c# generated classes; if omitted, will be the package.
+package kubemq;
+
+
+service kubemq {
+    // SendMessage - publish single message
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    // message_timeout - Optional, set timeout in millisecnd for verification of delivery
+    rpc SendMessage (Message) returns (Empty) {}
+
+    // SendMessageStream - publish constant stream of pub Message
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    rpc SendMessageStream (stream Message) returns (Empty) {}
+
+    // SubscribeToChannel - listening to pub messages
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    rpc SubscribeToChannel (SubscribeRequest) returns (stream Message) {}
+
+    // SendRequest - sending request with timeout
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    rpc SendRequest (Request) returns (Response) {}
+
+    // SendResponse - sending single response in case a client cannot support bi-di streaming
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    rpc SendResponse(Response) returns (Empty) {}
+
+    // RequestResponseStream - bi-di streams of getting request / sending replies
+    // Metadata Paramters:
+    // client_tag - a string that represent the client connection
+    // channel - the channel we subscribe for getting requests
+    // group - the gropu we subscirbe for getting requests
+    rpc RequestResponseStream (stream Response) returns (stream Request) {}
+}
+message Empty {}
+message Message {
+    string Channel =1;
+    string Metadata =2;
+    bytes  Body =3;
+}
+
+message SubscribeRequest {
+    string Channel =1 ;
+    string Group = 2;
+}
+
+message Request {
+    string ID =1;
+    string Channel =2;
+    string Metadata = 3;
+    bytes  Body = 4;
+    string ReplyChannel = 5;
+    int32  Timeout = 6;
+    string CacheKey = 7;
+    int32  CacheTTL = 8;
+    bytes  Context = 9;
+}
+
+message Response {
+    string RequestID = 1;
+    string ReplyChannel =2;
+    string Metadata = 3;
+    bytes  Body = 4;
+    bool   CacheHit =5;
+    bytes  Context=6;
+}

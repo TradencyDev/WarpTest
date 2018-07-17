@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F0E3A168-A1DC-4A33-971E-9016002240AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tradency.KubeMQ.SDK.csharp", "Tradency.KubeMQ.SDK.csharp\Tradency.KubeMQ.SDK.csharp.csproj", "{30088889-86B9-42C6-9C24-7CB9182D21B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tradency.KubeMQ.TestApp.Common", "Examples\Tradency.KubeMQ.TestApp.Common\Tradency.KubeMQ.TestApp.Common.csproj", "{797A5720-F75A-437B-93CF-8DF9555FC831}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tradency.KubeMQ.TestApp.PubsubSender", "Examples\Tradency.KubeMQ.TestApp.PubsubSender\Tradency.KubeMQ.TestApp.PubsubSender.csproj", "{143AE23B-3705-439A-B60D-E99127F07B77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tradency.KubeMQ.TestApp.PubsubSubscriber", "Examples\Tradency.KubeMQ.TestApp.PubsubSubscriber\Tradency.KubeMQ.TestApp.PubsubSubscriber.csproj", "{D6761020-8AA6-47A1-A0BC-832CD40F18B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tradency.KubeMQ.TestApp.RequestReplyInitiator", "Examples\Tradency.KubeMQ.TestApp.RequestReplyInitiator\Tradency.KubeMQ.TestApp.RequestReplyInitiator.csproj", "{CF69D17B-803B-4634-96F5-D9942C6D68F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tradency.KubeMQ.TestApp.RequestReplyResponder", "Examples\Tradency.KubeMQ.TestApp.RequestReplyResponder\Tradency.KubeMQ.TestApp.RequestReplyResponder.csproj", "{DBB8800E-6C25-49E3-ADAD-90D9C990D226}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{30088889-86B9-42C6-9C24-7CB9182D21B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30088889-86B9-42C6-9C24-7CB9182D21B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30088889-86B9-42C6-9C24-7CB9182D21B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30088889-86B9-42C6-9C24-7CB9182D21B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797A5720-F75A-437B-93CF-8DF9555FC831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797A5720-F75A-437B-93CF-8DF9555FC831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797A5720-F75A-437B-93CF-8DF9555FC831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797A5720-F75A-437B-93CF-8DF9555FC831}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143AE23B-3705-439A-B60D-E99127F07B77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143AE23B-3705-439A-B60D-E99127F07B77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143AE23B-3705-439A-B60D-E99127F07B77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143AE23B-3705-439A-B60D-E99127F07B77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6761020-8AA6-47A1-A0BC-832CD40F18B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6761020-8AA6-47A1-A0BC-832CD40F18B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6761020-8AA6-47A1-A0BC-832CD40F18B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6761020-8AA6-47A1-A0BC-832CD40F18B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CF69D17B-803B-4634-96F5-D9942C6D68F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF69D17B-803B-4634-96F5-D9942C6D68F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF69D17B-803B-4634-96F5-D9942C6D68F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF69D17B-803B-4634-96F5-D9942C6D68F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB8800E-6C25-49E3-ADAD-90D9C990D226}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB8800E-6C25-49E3-ADAD-90D9C990D226}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB8800E-6C25-49E3-ADAD-90D9C990D226}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB8800E-6C25-49E3-ADAD-90D9C990D226}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{797A5720-F75A-437B-93CF-8DF9555FC831} = {F0E3A168-A1DC-4A33-971E-9016002240AC}
+		{143AE23B-3705-439A-B60D-E99127F07B77} = {F0E3A168-A1DC-4A33-971E-9016002240AC}
+		{D6761020-8AA6-47A1-A0BC-832CD40F18B0} = {F0E3A168-A1DC-4A33-971E-9016002240AC}
+		{CF69D17B-803B-4634-96F5-D9942C6D68F6} = {F0E3A168-A1DC-4A33-971E-9016002240AC}
+		{DBB8800E-6C25-49E3-ADAD-90D9C990D226} = {F0E3A168-A1DC-4A33-971E-9016002240AC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBD39498-1EF2-4078-8704-67980A50B49B}
+	EndGlobalSection
+EndGlobal
