@@ -1,11 +1,11 @@
-# .NET Client for Navio
-.NET client SDK for Navio. Simple interface to work with the Navio server.
+# .NET Client for KubeMQ
+.NET client SDK for KubeMQ. Simple interface to work with the KubeMQ server.
 
-# What is Navio:
-Navio is a messaging backend for distributed services architecture, delivered as a single Kubernetes service. Easily connects to services and clients, allowing high-scale and high-availability cluster, low-latency and secured implementation of pub-sub, queue messaging patterns and request/reply.
+# What is KubeMQ:
+KubeMQ is a messaging backend for distributed services architecture, delivered as a single Kubernetes service. Easily connects to services and clients, allowing high-scale and high-availability cluster, low-latency and secured implementation of pub-sub, queue messaging patterns and request/reply.
 
 # General SDK description
-The SDK implements all communication patterns available through the Navio server:
+The SDK implements all communication patterns available through the KubeMQ server:
 - pub\sub
 - req\rep
 
@@ -20,7 +20,7 @@ The SDK implements all communication patterns available through the Navio server
 
 
 # Configurations
-The only required configuration setting is the Navio server address.
+The only required configuration setting is the KubeMQ server address.
 
 Configuration can be set by using one of the following:
 - Environment Variable
@@ -30,14 +30,14 @@ Configuration can be set by using one of the following:
 
 
 ### Configuration via Environment Variable
-Set `NavioServerAddress` to the Navio Server Address
+Set `KubeMQServerAddress` to the KubeMQ Server Address
 
 
 ### Configuration via appsettings.json
 Simply add the following to your appsettings.json:
 ```JSON
 {
-  "Navio": {
+  "KubeMQ": {
     "serverAddress": "{YourServerAddress}:{YourServerPort}"
   }
 }
@@ -49,29 +49,29 @@ Simply add the following to your app.config:
 ```xml
 <configuration>  
    <configSections>  
-    <section name="Navio" type="System.Configuration.NameValueSectionHandler"/>      
+    <section name="KubeMQ" type="System.Configuration.NameValueSectionHandler"/>      
   </configSections>  
     
-  <Navio>  
+  <KubeMQ>  
     <add key="serverAddress" value="{YourServerAddress}:{YourServerPort}"/>
-  </Navio>  
+  </KubeMQ>  
 </configuration>
 ```
 
 
 ### Configuration via code
-When setting the Navio server address within the code, simply pass the address as a parameter to the various constructors.
+When setting the KubeMQ server address within the code, simply pass the address as a parameter to the various constructors.
 See exactly how in the code examples in this document.
 
 
 # Usage: Main concepts
-TODO: add content for what is unique about the concept of Navio as opose to rabbit & kafka
+TODO: add content for what is unique about the concept of KubeMQ as opose to rabbit & kafka
 
 - **Channel:** Represents the endpoint target. One-to-one or one-to-many. Real-Time Multicast.
 - **Group:** Optional parameter when subscribing to a channel. A set of subscribers can define the same group so that only one of the subscribers within the group will receive a specific message. Used mainly for load balancing. Subscribing without the group parameter ensures receiving all the channel messages.
 - **Metadata:** The metadata allows to pass additional information with the message. Can be in any form that can be presented as a string, i.e. struct, JSON, XML and many more.
 - **Body:** The actual content of the message. Can be in any form that is serializable into byte array, i.e. string, struct, JSON, XML, Collection, binary file and many more.
-- **Client Display Name:** Optional field, Displayed in logs, tracing and Navio dashboard.
+- **Client Display Name:** Optional field, Displayed in logs, tracing and KubeMQ dashboard.
 
 
 # Usage: pub\sub
@@ -177,20 +177,20 @@ private Message CreateSimpleStringMessage(int i = 0)
 ```
 
 # Usage: req\rep
-Request reply communication pattern. Allows to cache the response at the Navio server.
+Request reply communication pattern. Allows to cache the response at the KubeMQ server.
 - Subscribe to requests
 - Send request
  
 ### Cache mechanism
-Navio server allows to store each response in a dedicated cache system. Each request can specify whether or not to use the cache.
-In case the cache is used, the Navio server will try to return the response directly from cache and reduce latency.
+KubeMQ server allows to store each response in a dedicated cache system. Each request can specify whether or not to use the cache.
+In case the cache is used, the KubeMQ server will try to return the response directly from cache and reduce latency.
 
 To use the cache mechanism, add the following parameters to each `Request`:
-- CacheKey - Unique key to store the response in the Navio cache mechanism.
+- CacheKey - Unique key to store the response in the KubeMQ cache mechanism.
 - CacheTTL - Cahce data Time to live in milliseconds per CacheKey.
 
 In the `Response` object you will receive an indication whether it was returned from cache:
-- CacheHit - Indication if the response was returned from Navio cache.
+- CacheHit - Indication if the response was returned from KubeMQ cache.
 
 ### The `Request` object:
 Struct used to send the request under the req\rep pattern. Contains the following fields (See Main concepts for more details on some field):
@@ -210,7 +210,7 @@ The `Response` Constructors requires the corresponding 'Request' object.
 
 Contains the following fields (See Main concepts for more details on some field):
 - RequestID - Set internally, used to match Request to Response.
-- CacheHit - Set internally, indication if the response was returned from Navio cache.
+- CacheHit - Set internally, indication if the response was returned from KubeMQ cache.
 - Metadata - Mandatory.
 - Body - Mandatory.
 
@@ -262,7 +262,7 @@ private Response HandleIncomingRequests(Request request)
 ```
 
 ### Send request methods
-The Navio SDK comes with two similar methods to send a `Request` and wait for the `Response`
+The KubeMQ SDK comes with two similar methods to send a `Request` and wait for the `Response`
 - `SendRequestAsync` returns the `Response` in a Task
 - `SendRequest` returns the `Response` to the Delegate (callback) supplied as a parameter
 
@@ -310,7 +310,7 @@ public void HandleResponse(Response response)
 ```
 
 # Tools
-The Navio SDK supplies methods to convert from and to the `body` that is in byte array format.
+The KubeMQ SDK supplies methods to convert from and to the `body` that is in byte array format.
 ```C#
 // Convert the request Body to a string
 string strBody = Tools.Converter.FromByteArray(request.Body).ToString();
